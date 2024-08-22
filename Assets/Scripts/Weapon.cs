@@ -11,8 +11,10 @@ public class Weapon : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            GameObject newbullet = GameObject.Instantiate(bulletPrefab);
+            GameObject newbullet = Instantiate(bulletPrefab);
             newbullet.transform.position = SpawnPoint.position;
+            newbullet.transform.rotation = SpawnPoint.rotation;
+            newbullet.GetComponent<Rigidbody>().AddForce(SpawnPoint.transform.forward * 100.0f);
 
         }
         
