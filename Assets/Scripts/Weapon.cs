@@ -26,7 +26,7 @@ public class Weapon : MonoBehaviour
             Destroy(newbullet, 3.0f);
 
             // Reducir el contador de balas cuando la bala sea destruida
-            StartCoroutine(DecreaseBulletCountAfterTime(3.0f));
+            StartCoroutine(DecreaseBulletCountAfterTime(2.0f));
         }
     }
 
