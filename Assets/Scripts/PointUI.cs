@@ -26,4 +26,10 @@ public class PointUI : MonoBehaviour
     
     
     }
+    public void Onclick_WinAnahuacEvent() 
+    { 
+        InvokeEvent<WinAnahuacRaffleEvent>(new WinAnahuacRaffleEvent());
+    
+    
+    }
 }
