@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Weapon : MonoBehaviour
 {
@@ -13,20 +14,17 @@ public class Weapon : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Mouse0) && currentBullets < maxBullets)
         {
-            GameObject newbullet = Instantiate(bulletPrefab);
+            /*GameObject newbullet = Instantiate(bulletPrefab);
             newbullet.transform.position = SpawnPoint.position;
             newbullet.transform.rotation = SpawnPoint.rotation;
             newbullet.GetComponent<Rigidbody>().AddForce(SpawnPoint.transform.forward * 100.0f);
-            newbullet.GetComponent<MeshRenderer>().material.color = Color.green;
+            newbullet.GetComponent<MeshRenderer>().material.color = Color.green; */
 
-            // Incrementar el contador de balas disparadas
-            currentBullets++;
+            Bulllet newBullet = null;
+            PoolManager.Instance.SpawnObject<Bulllet>(out newBullet,bulletPrefab,SpawnPoint.position, SpawnPoint.rotation, PoolManager.PoolType.GameObjects);
+            newBullet.GetComponent<Rigidbody>().AddForce(SpawnPoint.forward * 100.0f);
 
-            // Destruye la bala después de 3 segundos
-            Destroy(newbullet, 3.0f);
-
-            // Reducir el contador de balas cuando la bala sea destruida
-            StartCoroutine(DecreaseBulletCountAfterTime(2.0f));
+           
         }
     }
 
@@ -34,5 +32,12 @@ public class Weapon : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         currentBullets--; // Disminuir el contador de balas después de que se destruye la bala
+    }
+
+    IEnumerator CR_Destroy(float delay, GameObject bulllet)
+    {
+        yield return new WaitForSeconds(delay);
+        ///Destroy(bullet);
+        PoolManager.Instance.ReturnObjectToPool(bulllet);
     }
 }
